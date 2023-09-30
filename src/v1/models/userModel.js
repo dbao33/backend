@@ -11,7 +11,7 @@ const userSchema = new mongoose.Schema(
         // refresh_token: { type: String, required: true},
     },
     {
-        timestamps : true
+        timestamps: true
     }
 )
 const User = mongoose.model('User', userSchema)

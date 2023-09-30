@@ -1,5 +1,6 @@
 import User from '../models/userModel.js'
 import bcrypt from 'bcrypt'
+import { genneralAccessToken } from './jwtService.js'
 const createUserService = (newUser) => {
     return new Promise(async (resolve, reject) => {
         const { name, email, password, confirmPassword, phone } = newUser
@@ -33,4 +34,46 @@ const createUserService = (newUser) => {
         }
     })
 }
-export { createUserService }
+const loginUserService = (userLogin) => {
+    return new Promise(async (resolve, reject) => {
+        const { name, email, password, confirmPassword, phone } = userLogin
+        try {
+            const checkUser = await User.findOne({
+                email: email
+            })
+            if (checkUser === null) {
+                resolve({
+                    status: 'OK',
+                    message: 'The user is not exist'
+                })
+            }
+            const comparePassword = await bcrypt.compareSync(password, checkUser.password)
+            // console.log('comparePassword', comparePassword)
+            if (!comparePassword) {
+                resolve({
+                    status: 'OK',
+                    message: 'The user or password is incorrect'
+                })
+            }
+            const access_token = await genneralAccessToken({
+                id: checkUser.id,
+                isAdmin: checkUser.isAdmin
+            })
+            // console.log('accessToken', access_token)
+            const refresh_token = await genneralAccessToken({
+                id: checkUser.id,
+                isAdmin: checkUser.isAdmin
+            })
+            resolve({
+                status: 'OK',
+                message: 'SUCCESS',
+                access_token,
+                refresh_token
+            })
+
+        } catch (err) {
+            reject(err)
+        }
+    })
+}
+export { createUserService, loginUserService }
