@@ -1,5 +1,5 @@
 import User from '../models/userModel.js'
-
+import bcrypt from 'bcrypt'
 const createUserService = (newUser) => {
     return new Promise(async (resolve, reject) => {
         const { name, email, password, confirmPassword, phone } = newUser
@@ -13,11 +13,11 @@ const createUserService = (newUser) => {
                     message: 'The email is already in use'
                 })
             }
+            const hash = await bcrypt.hashSync(password, 12);
             const createUser = await User.create({
                 name,
                 email,
-                password,
-                confirmPassword,
+                password: hash,
                 phone
             })
             if (createUser) {
