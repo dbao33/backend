@@ -76,4 +76,31 @@ const loginUserService = (userLogin) => {
         }
     })
 }
-export { createUserService, loginUserService }
+
+const updateUserService = (id, data) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            const checkUser = await User.findOne({
+                _id: id
+            })
+            // console.log('checkUser', checkUser)
+            if (checkUser === null) {
+                resolve({
+                    status: 'OK',
+                    message: 'The user is not exist'
+                })
+            }
+            const updateUser = await User.findByIdAndUpdate(id, data, { new: true })
+            console.log('updateUser', updateUser)
+            resolve({
+                status: 'OK',
+                message: 'SUCCESS',
+                data: updateUser
+            })
+
+        } catch (err) {
+            reject(err)
+        }
+    })
+}
+export { createUserService, loginUserService, updateUserService }
