@@ -129,4 +129,54 @@ const deleteUserService = (id) => {
         }
     })
 }
-export { createUserService, loginUserService, updateUserService, deleteUserService }
+
+const getAllUserService = (id) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            
+            const allUser = await User.find()
+            // console.log('updateUser', updateUser)
+            resolve({
+                status: 'OK',
+                message: 'All user ',
+                data: allUser
+            })
+
+        } catch (err) {
+            reject(err)
+        }
+    })
+}
+
+const getDetailsService = (id) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            const checkUser = await User.findOne({
+                _id: id
+            })
+            // console.log('checkUser', checkUser)
+            if (checkUser === null) {
+                resolve({
+                    status: 'OK',
+                    message: 'The user is not exist'
+                })
+            }
+            resolve({
+                status: 'OK',
+                message: 'Find user success',
+                data: checkUser
+            })
+
+        } catch (err) {
+            reject(err)
+        }
+    })
+}
+export {
+    createUserService,
+    loginUserService,
+    updateUserService,
+    deleteUserService,
+    getAllUserService,
+    getDetailsService
+}
