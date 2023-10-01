@@ -16,4 +16,5 @@ const genneralRefreshToken = async (payload) => {
     )
     return refresh_token
 }
+
 export { genneralAccessToken, genneralRefreshToken }

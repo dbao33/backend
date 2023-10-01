@@ -1,4 +1,4 @@
-import { createUserService, loginUserService, updateUserService } from '../services/userService.js'
+import { createUserService, loginUserService, updateUserService, deleteUserService } from '../services/userService.js'
 
 const createUser = async (req, res) => {
     try {
@@ -71,7 +71,7 @@ const updateUser = async (req, res) => {
             })
 
         }
-        console.log('userId', userId)
+        // console.log('userId', userId)
         const respone = await updateUserService(userId, data)
         return res.status(200).json(respone)
     } catch (err) {
@@ -80,4 +80,25 @@ const updateUser = async (req, res) => {
         })
     }
 }
-export { createUser, loginUser, updateUser }
+
+const deleteUser = async (req, res) => {
+    try {
+        const userId = req.params.id
+        const token = req.headers
+        if (!userId) {
+            return res.status(200).json({
+                status: 'ERR',
+                message: 'The user is required to delete'
+            })
+
+        }
+        // console.log('userId', userId)
+        const respone = await deleteUserService(userId)
+        return res.status(200).json(respone)
+    } catch (err) {
+        return res.status(404).json({
+            message: err.message
+        })
+    }
+}
+export { createUser, loginUser, updateUser , deleteUser}
