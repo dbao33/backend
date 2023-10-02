@@ -1,6 +1,6 @@
 import User from '../models/userModel.js'
 import bcrypt from 'bcrypt'
-import { genneralAccessToken } from './jwtService.js'
+import { genneralAccessToken, genneralRefreshToken } from './jwtService.js'
 const createUserService = (newUser) => {
     return new Promise(async (resolve, reject) => {
         const { name, email, password, confirmPassword, phone } = newUser
@@ -60,7 +60,7 @@ const loginUserService = (userLogin) => {
                 isAdmin: checkUser.isAdmin
             })
             // console.log('accessToken', access_token)
-            const refresh_token = await genneralAccessToken({
+            const refresh_token = await genneralRefreshToken({
                 id: checkUser.id,
                 isAdmin: checkUser.isAdmin
             })
@@ -133,7 +133,7 @@ const deleteUserService = (id) => {
 const getAllUserService = (id) => {
     return new Promise(async (resolve, reject) => {
         try {
-            
+
             const allUser = await User.find()
             // console.log('updateUser', updateUser)
             resolve({
@@ -172,6 +172,7 @@ const getDetailsService = (id) => {
         }
     })
 }
+
 export {
     createUserService,
     loginUserService,

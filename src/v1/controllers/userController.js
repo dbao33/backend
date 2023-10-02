@@ -1,8 +1,8 @@
 import {
     createUserService, loginUserService, updateUserService, deleteUserService,
-    getAllUserService,getDetailsService
+    getAllUserService, getDetailsService
 } from '../services/userService.js'
-
+import { refreshTokenService } from '../services/jwtService.js'
 const createUser = async (req, res) => {
     try {
         const { name, email, password, confirmPassword, phone } = req.body
@@ -114,6 +114,7 @@ const getAllUser = async (req, res) => {
         })
     }
 }
+
 const getDetailsUser = async (req, res) => {
     try {
         const userId = req.params.id
@@ -133,11 +134,32 @@ const getDetailsUser = async (req, res) => {
         })
     }
 }
+
+const refreshToken = async (req, res) => {
+    try {
+        const token = req.headers.token.split(' ')[1]
+        if (!token) {
+            return res.status(200).json({
+                status: 'ERR',
+                message: 'The token is required'
+            })
+
+        }
+        // console.log('userId', userId)
+        const respone = await refreshTokenService(token)
+        return res.status(200).json(respone)
+    } catch (err) {
+        return res.status(404).json({
+            message: err.message
+        })
+    }
+}
 export {
     createUser,
     loginUser,
     updateUser,
     deleteUser,
     getAllUser,
-    getDetailsUser
+    getDetailsUser,
+    refreshToken
 }
