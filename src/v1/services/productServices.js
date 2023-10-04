@@ -114,11 +114,37 @@ const deleteProductService = (id) => {
     })
 }
 
-const getAllProductsService = (limit, page) => {
+const getAllProductsService = (limit, page, sort, filter) => {
     return new Promise(async (resolve, reject) => {
         try {
             const totalProducts = await Product.count()
-            const allProducts = await Product.find().limit(limit).skip(limit * page)
+            if (filter) {
+                console.log('filter', filter)
+                const labelFilter = filter[0]
+                const allProductsFilter = await Product.find({ [labelFilter]: { '$regex': filter[1] } }).limit(limit).skip(limit * page)
+                resolve({
+                    status: 'OK',
+                    message: 'All Products Filter',
+                    data: allProductsFilter,
+                    total: totalProducts,
+                    pageCurrent: page + 1,
+                    totalPages: Math.ceil(totalProducts / limit)
+                })
+            }
+            if (sort) {
+                const objectSort = {}
+                objectSort[sort[1]] = sort[0]
+                const allProductsSort = await Product.find().limit(limit).skip(limit * page).sort(objectSort)
+                resolve({
+                    status: 'OK',
+                    message: 'All Products Sort',
+                    data: allProductsSort,
+                    total: totalProducts,
+                    pageCurrent: page + 1,
+                    totalPages: Math.ceil(totalProducts / limit)
+                })
+            }
+            const allProducts = await Product.find().limit(limit).skip(limit * page).sort(Product.rating)
             resolve({
                 status: 'OK',
                 message: 'All Products ',
