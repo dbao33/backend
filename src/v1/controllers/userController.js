@@ -3,6 +3,7 @@ import {
     getAllUserService, getDetailsService
 } from '../services/userService.js'
 import { refreshTokenService } from '../services/jwtService.js'
+
 const createUser = async (req, res) => {
     try {
         const { name, email, password, confirmPassword, phone } = req.body
