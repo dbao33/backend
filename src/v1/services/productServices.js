@@ -114,16 +114,18 @@ const deleteProductService = (id) => {
     })
 }
 
-const getAllProductsService = (id) => {
+const getAllProductsService = (limit, page) => {
     return new Promise(async (resolve, reject) => {
         try {
-
-            const allProducts = await Product.find()
-            // console.log('updateProducts', updateProducts)
+            const totalProducts = await Product.count()
+            const allProducts = await Product.find().limit(limit).skip(limit * page)
             resolve({
                 status: 'OK',
                 message: 'All Products ',
-                data: allProducts
+                data: allProducts,
+                total: totalProducts,
+                pageCurrent: page + 1,
+                totalPages: Math.ceil(totalProducts / limit)
             })
 
         } catch (err) {
