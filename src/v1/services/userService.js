@@ -130,16 +130,16 @@ const deleteUserService = (id) => {
     })
 }
 
-const getAllUserService = (id) => {
+const getAllUsersService = (id) => {
     return new Promise(async (resolve, reject) => {
         try {
 
-            const allUser = await User.find()
+            const allUsers = await User.find()
             // console.log('updateUser', updateUser)
             resolve({
                 status: 'OK',
                 message: 'All user ',
-                data: allUser
+                data: allUsers
             })
 
         } catch (err) {
@@ -178,6 +178,6 @@ export {
     loginUserService,
     updateUserService,
     deleteUserService,
-    getAllUserService,
+    getAllUsersService,
     getDetailsService
 }

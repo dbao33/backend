@@ -1,6 +1,6 @@
 import {
     createUserService, loginUserService, updateUserService, deleteUserService,
-    getAllUserService, getDetailsService
+    getAllUsersService, getDetailsService
 } from '../services/userService.js'
 import { refreshTokenService } from '../services/jwtService.js'
 
@@ -105,9 +105,9 @@ const deleteUser = async (req, res) => {
     }
 }
 
-const getAllUser = async (req, res) => {
+const getAllUsers = async (req, res) => {
     try {
-        const respone = await getAllUserService()
+        const respone = await getAllUsersService()
         return res.status(200).json(respone)
     } catch (err) {
         return res.status(404).json({
@@ -160,7 +160,7 @@ export {
     loginUser,
     updateUser,
     deleteUser,
-    getAllUser,
+    getAllUsers,
     getDetailsUser,
     refreshToken
 }
