@@ -3,14 +3,14 @@ import bcrypt from 'bcrypt'
 import { genneralAccessToken, genneralRefreshToken } from './jwtService.js'
 const createUserService = (newUser) => {
     return new Promise(async (resolve, reject) => {
-        const { name, email, password, confirmPassword, phone } = newUser
+        const { name, email, password } = newUser
         try {
             const checkUser = await User.findOne({
                 email: email
             })
             if (checkUser !== null) {
                 resolve({
-                    status: 'OK',
+                    status: 'ERR',
                     message: 'The email is already in use'
                 })
             }
@@ -18,8 +18,7 @@ const createUserService = (newUser) => {
             const createUser = await User.create({
                 name,
                 email,
-                password: hash,
-                phone
+                password: hash
             })
             if (createUser) {
                 resolve({
@@ -36,14 +35,14 @@ const createUserService = (newUser) => {
 }
 const loginUserService = (userLogin) => {
     return new Promise(async (resolve, reject) => {
-        const { name, email, password, confirmPassword, phone } = userLogin
+        const { email, password } = userLogin
         try {
             const checkUser = await User.findOne({
                 email: email
             })
             if (checkUser === null) {
                 resolve({
-                    status: 'OK',
+                    status: 'ERR',
                     message: 'The user is not exist'
                 })
             }
@@ -51,7 +50,7 @@ const loginUserService = (userLogin) => {
             // console.log('comparePassword', comparePassword)
             if (!comparePassword) {
                 resolve({
-                    status: 'OK',
+                    status: 'ERR',
                     message: 'The user or password is incorrect'
                 })
             }
@@ -91,7 +90,7 @@ const updateUserService = (id, data) => {
                 })
             }
             const updateUser = await User.findByIdAndUpdate(id, data, { new: true })
-            console.log('updateUser', updateUser)
+            // console.log('updateUser', updateUser)
             resolve({
                 status: 'OK',
                 message: 'SUCCESS',

@@ -119,7 +119,7 @@ const getAllProductsService = (limit, page, sort, filter) => {
         try {
             const totalProducts = await Product.count()
             if (filter) {
-                console.log('filter', filter)
+                // console.log('filter', filter)
                 const labelFilter = filter[0]
                 const allProductsFilter = await Product.find({ [labelFilter]: { '$regex': filter[1] } }).limit(limit).skip(limit * page)
                 resolve({

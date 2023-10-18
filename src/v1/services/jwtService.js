@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken'
 import 'dotenv/config'
 const genneralAccessToken = async (payload) => {
-    console.log('payload', payload)
+    // console.log('payload', payload)
     const access_token = jwt.sign({
         payload
     }, process.env.ACCESS_TOKEN, { expiresIn: '60s' }
@@ -9,7 +9,7 @@ const genneralAccessToken = async (payload) => {
     return access_token
 }
 const genneralRefreshToken = async (payload) => {
-    console.log('payload', payload)
+    // console.log('payload', payload)
     const refresh_token = jwt.sign({
         payload
     }, process.env.REFRESH_TOKEN, { expiresIn: '365d' }
@@ -20,7 +20,7 @@ const refreshTokenService = async (token) => {
     return new Promise(async (resolve, reject) => {
         try {
 
-            console.log('token', token)
+            // console.log('token', token)
             jwt.verify(token, process.env.REFRESH_TOKEN, async (err, user) => {
                 if (err) {
                     resolve({
@@ -28,7 +28,7 @@ const refreshTokenService = async (token) => {
                         message: 'The authentication'
                     })
                 }
-                console.log('user', user)
+                // console.log('user', user)
                 const { payload } = user
                 const access_token = await genneralAccessToken({
                     id: payload?.id,
