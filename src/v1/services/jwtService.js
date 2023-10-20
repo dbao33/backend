@@ -29,10 +29,9 @@ const refreshTokenService = async (token) => {
                     })
                 }
                 // console.log('user', user)
-                const { payload } = user
                 const access_token = await genneralAccessToken({
-                    id: payload?.id,
-                    isAdmin: payload?.isAdmin
+                    id: user?.id,
+                    isAdmin: user?.isAdmin
                 })
 
                 resolve({
