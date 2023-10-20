@@ -25,8 +25,8 @@ const createUser = async (req, res) => {
                 message: 'The password is equal confirmPassword'
             })
         }
-        const respone = await createUserService(req.body)
-        return res.status(200).json(respone)
+        const response = await createUserService(req.body)
+        return res.status(200).json(response)
     } catch (err) {
         return res.status(404).json({
             message: err.message
@@ -52,8 +52,14 @@ const loginUser = async (req, res) => {
             })
         }
 
-        const respone = await loginUserService(req.body)
-        return res.status(200).json(respone)
+        const response = await loginUserService(req.body)
+        const { refresh_token, ...newReponse } = response
+        res.cookie('refresh_token', refresh_token, {
+            HttpOnly: true,
+            Secure: true,
+        })
+        // console.log('response', response)
+        return res.status(200).json(newReponse)
     } catch (err) {
         return res.status(404).json({
             message: err.message
@@ -73,8 +79,8 @@ const updateUser = async (req, res) => {
 
         }
         // console.log('userId', userId)
-        const respone = await updateUserService(userId, data)
-        return res.status(200).json(respone)
+        const response = await updateUserService(userId, data)
+        return res.status(200).json(response)
     } catch (err) {
         return res.status(404).json({
             message: err.message
@@ -93,8 +99,8 @@ const deleteUser = async (req, res) => {
 
         }
         // console.log('userId', userId)
-        const respone = await deleteUserService(userId)
-        return res.status(200).json(respone)
+        const response = await deleteUserService(userId)
+        return res.status(200).json(response)
     } catch (err) {
         return res.status(404).json({
             message: err.message
@@ -104,8 +110,8 @@ const deleteUser = async (req, res) => {
 
 const getAllUsers = async (req, res) => {
     try {
-        const respone = await getAllUsersService()
-        return res.status(200).json(respone)
+        const response = await getAllUsersService()
+        return res.status(200).json(response)
     } catch (err) {
         return res.status(404).json({
             message: err.message
@@ -124,8 +130,8 @@ const getDetailsUser = async (req, res) => {
 
         }
         // console.log('userId', userId)
-        const respone = await getDetailsService(userId)
-        return res.status(200).json(respone)
+        const response = await getDetailsService(userId)
+        return res.status(200).json(response)
     } catch (err) {
         return res.status(404).json({
             message: err.message
@@ -135,7 +141,7 @@ const getDetailsUser = async (req, res) => {
 
 const refreshToken = async (req, res) => {
     try {
-        const token = req.headers.token.split(' ')[1]
+        const token = req.cookies.refresh_token
         if (!token) {
             return res.status(200).json({
                 status: 'ERR',
@@ -144,8 +150,8 @@ const refreshToken = async (req, res) => {
 
         }
         // console.log('userId', userId)
-        const respone = await refreshTokenService(token)
-        return res.status(200).json(respone)
+        const response = await refreshTokenService(token)
+        return res.status(200).json(response)
     } catch (err) {
         return res.status(404).json({
             message: err.message

@@ -3,6 +3,7 @@ import 'dotenv/config'
 import mongoose from 'mongoose'
 import routes from './src/v1/routes/indexRoute.js'
 import cors from 'cors'
+import cookieParser from 'cookie-parser'
 
 //runnig on this port
 const PORT = process.env.PORT || 5050
@@ -11,7 +12,8 @@ const PORT = process.env.PORT || 5050
 const app = express()
 // Sử dụng body-parser middleware
 app.use(express.json())
-
+// Sử dụng cookieParser
+app.use(cookieParser())
 app.use(cors())
 routes(app)
 
