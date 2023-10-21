@@ -17,6 +17,9 @@ app.use(cookieParser())
 app.use(cors())
 routes(app)
 
+//giới hạn kích thước
+app.use(express.json({ limit: '50mb' }))
+app.use(express.urlencoded({ limit: '50mb' }))
 
 
 mongoose.connect(process.env.MONGO_URI, { serverSelectionTimeoutMS: 3000 })

@@ -46,7 +46,7 @@ const updateProductService = (id, data) => {
             // console.log('checkProduct', checkProduct)
             if (checkProduct === null) {
                 resolve({
-                    status: 'OK',
+                    status: 'ERR',
                     message: 'The Product is not exist'
                 })
             }
