@@ -160,6 +160,22 @@ const refreshToken = async (req, res) => {
         })
     }
 }
+
+const logOutUser = async (req, res) => {
+    try {
+        res.clearCookie('refresh_token')
+        return res.status(200).json({
+            status: 'OK',
+            message: 'Logout successfully'
+        })
+
+    } catch (err) {
+        return res.status(404).json({
+            message: err.message
+        })
+    }
+}
+
 export {
     createUser,
     loginUser,
@@ -167,5 +183,6 @@ export {
     deleteUser,
     getAllUsers,
     getDetailsUser,
-    refreshToken
+    refreshToken,
+    logOutUser
 }
