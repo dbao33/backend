@@ -160,10 +160,27 @@ const getAllProductsService = (limit, page, sort, filter) => {
     })
 }
 
+const deleteManyProductsService = (ids) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+
+            await Product.deleteMany({ _id: ids })
+            // console.log('updateProduct', updateProduct)
+            resolve({
+                status: 'OK',
+                message: 'Delete Many Products success'
+            })
+
+        } catch (err) {
+            reject(err)
+        }
+    })
+}
 export {
     createProductService,
     updateProductService,
     getDetailsProductService,
     deleteProductService,
-    getAllProductsService
+    getAllProductsService,
+    deleteManyProductsService
 }
