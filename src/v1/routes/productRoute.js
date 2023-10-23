@@ -1,7 +1,8 @@
 import express from 'express'
 import {
     createProduct, updateProduct, getDetailsProduct,
-    deleteProduct, getAllProducts, deleteManyProducts
+    deleteProduct, getAllProducts, deleteManyProducts,
+    getAllTypes
 } from '../controllers/productController.js'
 
 import { authMiddleware } from '../middlerwares/authMiddlerware.js'
@@ -12,5 +13,6 @@ router.route('/delete-product/:id').delete(authMiddleware, deleteProduct)
 router.route('/get-details-product/:id').get(getDetailsProduct)
 router.route('/get-all-products/').get(getAllProducts)
 router.route('/delete-many-products').post(authMiddleware, deleteManyProducts)
+router.route('/get-all-types/').get(getAllTypes)
 
 export default router 

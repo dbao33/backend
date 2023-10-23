@@ -1,6 +1,7 @@
 import {
     createProductService, updateProductService, getDetailsProductService,
-    deleteProductService, getAllProductsService, deleteManyProductsService
+    deleteProductService, getAllProductsService, deleteManyProductsService,
+    getAllTypesService
 } from '../services/productServices.js'
 
 
@@ -115,11 +116,26 @@ const deleteManyProducts = async (req, res) => {
         })
     }
 }
+
+const getAllTypes = async (req, res) => {
+    try {
+        const respone = await getAllTypesService()
+        return res.status(200).json(respone)
+    } catch (err) {
+        return res.status(404).json({
+            message: err.message
+        })
+    }
+}
+
 export {
     createProduct,
     updateProduct,
     getDetailsProduct,
     deleteProduct,
     getAllProducts,
-    deleteManyProducts
+    deleteManyProducts,
+    getAllTypes,
+
+
 }

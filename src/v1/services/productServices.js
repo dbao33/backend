@@ -176,11 +176,30 @@ const deleteManyProductsService = (ids) => {
         }
     })
 }
+
+const getAllTypesService = () => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            const allTypes = await Product.distinct('type')
+            resolve({
+                status: 'OK',
+                message: 'All Types ',
+                data: allTypes,
+            })
+
+        } catch (err) {
+            reject(err)
+        }
+    })
+}
+
 export {
     createProductService,
     updateProductService,
     getDetailsProductService,
     deleteProductService,
     getAllProductsService,
-    deleteManyProductsService
+    deleteManyProductsService,
+    getAllTypesService,
+
 }
