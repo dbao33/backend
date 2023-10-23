@@ -172,11 +172,28 @@ const getDetailsService = (id) => {
     })
 }
 
+const deleteManyUsersService = (ids) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            await Product.deleteMany({ _id: ids })
+            resolve({
+                status: 'OK',
+                message: 'Delete Many Users success'
+            })
+            
+        } catch (err) {
+            reject(err)
+        }
+    })
+}
+
 export {
     createUserService,
     loginUserService,
     updateUserService,
     deleteUserService,
     getAllUsersService,
-    getDetailsService
+    getDetailsService,
+    deleteManyUsersService,
+
 }

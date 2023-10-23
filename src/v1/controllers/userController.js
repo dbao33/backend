@@ -1,6 +1,6 @@
 import {
     createUserService, loginUserService, updateUserService, deleteUserService,
-    getAllUsersService, getDetailsService
+    getAllUsersService, getDetailsService, deleteManyUsersService
 } from '../services/userService.js'
 import { refreshTokenService } from '../services/jwtService.js'
 
@@ -176,6 +176,25 @@ const logOutUser = async (req, res) => {
     }
 }
 
+const deleteManyUsers = async (req, res) => {
+    try {
+        const ids = req.body.ids
+        if (!ids) {
+            return res.status(200).json({
+                status: 'ERR',
+                message: 'The ids Users is required to delete'
+            })
+
+        }
+        const respone = await deleteManyUsersService(ids)
+        return res.status(200).json(respone)
+    } catch (err) {
+        return res.status(404).json({
+            message: err.message
+        })
+    }
+}
+
 export {
     createUser,
     loginUser,
@@ -184,5 +203,7 @@ export {
     getAllUsers,
     getDetailsUser,
     refreshToken,
-    logOutUser
+    logOutUser,
+    deleteManyUsers,
+
 }
