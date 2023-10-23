@@ -1,6 +1,7 @@
 import {
     createProductService, updateProductService, getDetailsProductService,
-    deleteProductService, getAllProductsService
+    deleteProductService, getAllProductsService, deleteManyProductsService,
+    getAllTypesService
 } from '../services/productServices.js'
 
 
@@ -88,7 +89,7 @@ const deleteProduct = async (req, res) => {
 const getAllProducts = async (req, res) => {
     try {
         const { limt, page, sort, filter } = req.query
-        const respone = await getAllProductsService(Number(limt) || 6, Number(page) || 0, sort, filter)
+        const respone = await getAllProductsService(Number(limt) || null, Number(page) || 0, sort, filter)
         return res.status(200).json(respone)
     } catch (err) {
         return res.status(404).json({
@@ -96,10 +97,45 @@ const getAllProducts = async (req, res) => {
         })
     }
 }
+
+const deleteManyProducts = async (req, res) => {
+    try {
+        const ids = req.body.ids
+        if (!ids) {
+            return res.status(200).json({
+                status: 'ERR',
+                message: 'The ids Products is required to delete'
+            })
+
+        }
+        const respone = await deleteManyProductsService(ids)
+        return res.status(200).json(respone)
+    } catch (err) {
+        return res.status(404).json({
+            message: err.message
+        })
+    }
+}
+
+const getAllTypes = async (req, res) => {
+    try {
+        const respone = await getAllTypesService()
+        return res.status(200).json(respone)
+    } catch (err) {
+        return res.status(404).json({
+            message: err.message
+        })
+    }
+}
+
 export {
     createProduct,
     updateProduct,
     getDetailsProduct,
     deleteProduct,
-    getAllProducts
+    getAllProducts,
+    deleteManyProducts,
+    getAllTypes,
+
+
 }
