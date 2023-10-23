@@ -3,6 +3,7 @@ import {
     getAllUsersService, getDetailsService
 } from '../services/userService.js'
 import { refreshTokenService } from '../services/jwtService.js'
+import { response } from 'express'
 
 const createUser = async (req, res) => {
     try {
@@ -161,6 +162,7 @@ const refreshToken = async (req, res) => {
     }
 }
 
+
 const logOutUser = async (req, res) => {
     try {
         res.clearCookie('refresh_token')
@@ -168,7 +170,6 @@ const logOutUser = async (req, res) => {
             status: 'OK',
             message: 'Logout successfully'
         })
-
     } catch (err) {
         return res.status(404).json({
             message: err.message
