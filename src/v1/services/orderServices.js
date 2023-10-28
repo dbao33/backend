@@ -66,7 +66,34 @@ const createOrderService = (newOrder) => {
     })
 }
 
+const getDetailsOrderService = (id) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            const order = await Order.findById({
+                _id: id
+            })
+            if (order === null) {
+                resolve({
+                    status: 'ERR',
+                    message: 'The order is not defined'
+                })
+            }
+
+            resolve({
+                status: 'OK',
+                message: 'SUCESSS',
+                data: order
+            })
+        } catch (err) {
+            reject(err)
+        }
+    })
+}
+
+
 export {
     createOrderService,
+    getDetailsOrderService,
+
 
 }
