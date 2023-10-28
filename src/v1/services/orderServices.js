@@ -3,8 +3,8 @@ import Order from '../models/oderProduct.js'
 
 const createOrderService = (newOrder) => {
     return new Promise(async (resolve, reject) => {
-        const { orderItems, paymentMethod, itemsPrice, shippingPrice,
-            totalPrice, fullName, address, city, phone, user } = newOrder
+        const { orderItems, paymentMethod, itemsPrice, shippingPrice, totalPrice,
+            fullName, address, city, phone, user, isPaid, paidAt } = newOrder
         try {
             const promises = orderItems.map(async (order) => {
                 const productData = await Product.findOneAndUpdate(
@@ -33,6 +33,8 @@ const createOrderService = (newOrder) => {
                         shippingPrice,
                         totalPrice,
                         user: user,
+                        isPaid,
+                        paidAt
                     })
                     if (createdOrder) {
                         return {
