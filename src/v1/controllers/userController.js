@@ -3,7 +3,6 @@ import {
     getAllUsersService, getDetailsService, deleteManyUsersService
 } from '../services/userService.js'
 import { refreshTokenService } from '../services/jwtService.js'
-import { response } from 'express'
 
 const createUser = async (req, res) => {
     try {
