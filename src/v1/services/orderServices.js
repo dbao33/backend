@@ -66,7 +66,7 @@ const createOrderService = (newOrder) => {
     })
 }
 
-const getDetailsOrderService = (id) => {
+const getOrderDetailsService = (id) => {
     return new Promise(async (resolve, reject) => {
         try {
             const order = await Order.findById({
@@ -81,7 +81,7 @@ const getDetailsOrderService = (id) => {
 
             resolve({
                 status: 'OK',
-                message: 'SUCESSS',
+                message: 'success',
                 data: order
             })
         } catch (err) {
@@ -104,7 +104,7 @@ const getAllOrderDetailsService = (id) => {
             }
             resolve({
                 status: 'OK',
-                message: 'SUCESSS',
+                message: 'success',
                 data: order
             })
         }
@@ -115,10 +115,66 @@ const getAllOrderDetailsService = (id) => {
     )
 }
 
+const cancelOrderService = (id, data) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let order = []
+            const promises = data.map(async (order) => {
+                const productData = await Product.findOneAndUpdate(
+                    {
+                        _id: order.product,
+                        selled: { $gte: order.amount }
+                    },
+                    {
+                        $inc: {
+                            countInStock: +order.amount,
+                            selled: -order.amount
+                        }
+                    },
+                    { new: true }
+                )
+                // console.log('productData', productData)
+                if (productData) {
+                    order = await Order.findByIdAndDelete(id)
+                    if (order === null) {
+                        resolve({
+                            status: 'ERR',
+                            message: 'The order is not defined'
+                        })
+                    }
+                } else {
+                    return {
+                        status: 'OK',
+                        message: 'ERR',
+                        id: order.product
+                    }
+                }
+            })
+
+            const results = await Promise.all(promises)
+            const newData = results && results.filter((item) => item)
+            if (newData.length) {
+                resolve({
+                    status: 'ERR',
+                    message: `San pham voi id${newData.join(',')} khong ton tai`
+                })
+            }
+            resolve({
+                status: 'OK',
+                message: 'Cancel order success',
+                data: order
+            })
+        } catch (err) {
+            reject(err)
+        }
+    })
+}
+
 export {
     createOrderService,
-    getDetailsOrderService,
+    getOrderDetailsService,
     getAllOrderDetailsService,
+    cancelOrderService,
 
 
 }

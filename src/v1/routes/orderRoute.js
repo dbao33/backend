@@ -1,6 +1,7 @@
 import express from 'express'
 import {
-    createOrder, getDetailsOrder, getAllOrderDetails,
+    createOrder, getOrderDetails, getAllOrderDetails,
+    cancelOrder
 } from '../controllers/orderController.js'
 
 import { authUserMiddleware } from '../middlerwares/authMiddlerware.js'
@@ -9,6 +10,9 @@ import { authUserMiddleware } from '../middlerwares/authMiddlerware.js'
 const router = express.Router()
 
 router.post('/create', authUserMiddleware, createOrder)
-router.get('/get-details-order/:id', getDetailsOrder)
-router.get('/get-all-details-order/:id', authUserMiddleware, getAllOrderDetails)
+router.get('/get-order-details/:id', getOrderDetails)
+router.get('/get-all-order-details/:id', authUserMiddleware, getAllOrderDetails)
+router.delete('/cancel-order/:id', authUserMiddleware, cancelOrder)
+
+
 export default router 

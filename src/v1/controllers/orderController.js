@@ -1,6 +1,6 @@
 import {
-    createOrderService, getDetailsOrderService, getAllOrderDetailsService,
-
+    createOrderService, getOrderDetailsService, getAllOrderDetailsService,
+    cancelOrderService,
 } from '../services/orderServices.js'
 
 const createOrder = async (req, res) => {
@@ -21,7 +21,7 @@ const createOrder = async (req, res) => {
     }
 }
 
-const getDetailsOrder = async (req, res) => {
+const getOrderDetails = async (req, res) => {
     try {
         const userId = req.params.id
         if (!userId) {
@@ -30,7 +30,7 @@ const getDetailsOrder = async (req, res) => {
                 message: 'The userId is required'
             })
         }
-        const response = await getDetailsOrderService(userId)
+        const response = await getOrderDetailsService(userId)
         return res.status(200).json(response)
     } catch (err) {
         return res.status(404).json({
@@ -57,11 +57,31 @@ const getAllOrderDetails = async (req, res) => {
     }
 }
 
+const cancelOrder = async (req, res) => {
+    try {
+        const orderId = req.params.id
+        const data = req.body
+        if (!orderId) {
+            return res.status(200).json({
+                status: 'ERR',
+                message: 'The userId is required'
+            })
+        }
+        const response = await cancelOrderService(orderId, data)
+        return res.status(200).json(response)
+    } catch (err) {
+        return res.status(404).json({
+            message: err.message
+        })
+    }
+}
+
 
 export {
     createOrder,
-    getDetailsOrder,
+    getOrderDetails,
     getAllOrderDetails,
+    cancelOrder,
 
 
 }
