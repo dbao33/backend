@@ -90,10 +90,35 @@ const getDetailsOrderService = (id) => {
     })
 }
 
+const getAllOrderDetailsService = (id) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            const order = await Order.find({
+                user: id
+            })
+            if (order === null) {
+                resolve({
+                    status: 'ERR',
+                    message: 'The order is not defined'
+                })
+            }
+            resolve({
+                status: 'OK',
+                message: 'SUCESSS',
+                data: order
+            })
+        }
+        catch (err) {
+            reject(err)
+        }
+    }
+    )
+}
 
 export {
     createOrderService,
     getDetailsOrderService,
+    getAllOrderDetailsService,
 
 
 }
