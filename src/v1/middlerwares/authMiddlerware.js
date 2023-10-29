@@ -5,6 +5,7 @@ const authMiddleware = (req, res, next) => {
    
     // console.log('checkToken', req.headers.token)
     const token = req.headers.token.split(' ')[1]
+    // const token = req.headers.token.split(' ')[1]
     // verify a token symmetric
     jwt.verify(token, process.env.ACCESS_TOKEN, function (err, user) {
         if (err) {
@@ -28,6 +29,7 @@ const authMiddleware = (req, res, next) => {
 const authUserMiddleware = (req, res, next) => {
     // console.log('checkToken', req.headers.token)
     const token = req.headers.token.split(' ')[1]
+    // const token = req.headers.token
     const userId = req.params.id
 
     // verify a token symmetric
