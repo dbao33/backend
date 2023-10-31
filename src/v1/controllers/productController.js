@@ -8,9 +8,9 @@ import {
 const createProduct = async (req, res) => {
     try {
         const { name, image, type, price,
-            countInStock, rating, description ,discount} = req.body
+            countInStock, rating, description, discount, selled } = req.body
         // console.log('req.body', req.body)
-        if (!name || !image || !type || !price || !countInStock || !rating|| !discount) {
+        if (!name || !type || !price || !countInStock || !rating) {
             return res.status(200).json({
                 status: 'ERR',
                 message: 'The input is required'
