@@ -120,7 +120,7 @@ const deleteProductService = (id) => {
 const getAllProductsService = (limit, page, sort, filter) => {
     return new Promise(async (resolve, reject) => {
         try {
-            const totalProducts = await Product.count()
+            const totalProducts = await Product.count
             let allProducts = []
             if (filter) {
                 // console.log('filter', filter)
