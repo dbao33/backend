@@ -1,5 +1,5 @@
 import Order from '../models/oderProduct.js'
-
+import Product from '../models/productModel.js'
 
 const createOrderService = (newOrder) => {
     return new Promise(async (resolve, reject) => {
