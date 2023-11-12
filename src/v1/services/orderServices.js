@@ -172,11 +172,28 @@ const cancelOrderService = (id, data) => {
     })
 }
 
+const getAllOrderService = () => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            const allOrder = await Order.find().sort({createdAt: -1, updatedAt: -1})
+            resolve({
+                status: 'OK',
+                message: 'Success',
+                data: allOrder
+            })
+        } catch (e) {
+            reject(e)
+        }
+    })
+}
+
+
 export {
     createOrderService,
     getOrderDetailsService,
     getAllOrderDetailsService,
     cancelOrderService,
+    getAllOrderService,
 
 
 }

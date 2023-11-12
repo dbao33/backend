@@ -1,6 +1,7 @@
 import {
     createOrderService, getOrderDetailsService, getAllOrderDetailsService,
     cancelOrderService,
+    getAllOrderService,
 } from '../services/orderServices.js'
 
 const createOrder = async (req, res) => {
@@ -76,12 +77,25 @@ const cancelOrder = async (req, res) => {
     }
 }
 
+const getAllOrder = async (req, res) => {
+    try {
+        const data = await getAllOrderService()
+        return res.status(200).json(data)
+    } catch (e) {
+        // console.log(e)
+        return res.status(404).json({
+            message: e.message
+        })
+    }
+}
+
 
 export {
     createOrder,
     getOrderDetails,
     getAllOrderDetails,
     cancelOrder,
+    getAllOrder,
 
 
 }
