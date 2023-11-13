@@ -3,6 +3,7 @@ import {
     getAllUsersService, getDetailsService, deleteManyUsersService
 } from '../services/userService.js'
 import { refreshTokenService } from '../services/jwtService.js'
+import bcrypt from 'bcrypt'
 
 const createUser = async (req, res) => {
     try {
@@ -81,6 +82,9 @@ const updateUser = async (req, res) => {
 
         }
         // console.log('userId', userId)
+        if (data.password) {
+            data.password = await bcrypt.hashSync(data.password, 12)
+        }
         const response = await updateUserService(userId, data)
         return res.status(200).json(response)
     } catch (err) {

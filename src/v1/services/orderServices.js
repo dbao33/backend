@@ -55,7 +55,7 @@ const createOrderService = (newOrder) => {
             if (newData.length) {
                 resolve({
                     status: 'ERR',
-                    message: `San pham voi id${newData.join(',')} khong du hang`
+                    message: `San pham voi id ${newData.map((item) => item.id).join(', ')} khong du hang`
                 })
             }
             resolve({
