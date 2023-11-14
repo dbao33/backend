@@ -6,8 +6,7 @@ import {
 
 const createOrder = async (req, res) => {
     try {
-        console.log(req.body)
-        const { paymentMethod, itemsPrice, shippingPrice, totalPrice,
+        const { paymentMethod, deliveredMethod, itemsPrice, shippingPrice, totalPrice,
             fullName, address, city, phone } = req.body
         if (!paymentMethod || !itemsPrice || shippingPrice === null ||
             !totalPrice || !fullName || !address || !city || !phone) {

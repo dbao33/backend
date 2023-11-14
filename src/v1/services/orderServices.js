@@ -3,7 +3,7 @@ import Product from '../models/productModel.js'
 
 const createOrderService = (newOrder) => {
     return new Promise(async (resolve, reject) => {
-        const { orderItems, paymentMethod, itemsPrice, shippingPrice, totalPrice,
+        const { orderItems, paymentMethod, deliveredMethod, itemsPrice, shippingPrice, totalPrice,
             fullName, address, city, phone, user, isPaid, paidAt } = newOrder
         try {
             const promises = orderItems.map(async (order) => {
@@ -29,6 +29,7 @@ const createOrderService = (newOrder) => {
                             city, phone
                         },
                         paymentMethod,
+                        deliveredMethod,
                         itemsPrice,
                         shippingPrice,
                         totalPrice,
@@ -158,7 +159,7 @@ const cancelOrderService = (id, data) => {
             if (newData.length) {
                 resolve({
                     status: 'ERR',
-                    message: `San pham voi id${newData.join(',')} khong ton tai`
+                    message: `San pham voi id ${newData.map((item) => item.id).join(', ')} khong ton tai`
                 })
             }
             resolve({
@@ -175,7 +176,7 @@ const cancelOrderService = (id, data) => {
 const getAllOrderService = () => {
     return new Promise(async (resolve, reject) => {
         try {
-            const allOrder = await Order.find().sort({createdAt: -1, updatedAt: -1})
+            const allOrder = await Order.find().sort({ createdAt: -1, updatedAt: -1 })
             resolve({
                 status: 'OK',
                 message: 'Success',
