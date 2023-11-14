@@ -21,28 +21,12 @@ const createOrderService = (newOrder) => {
                     { new: true }
                 )
                 if (productData) {
-                    const createdOrder = await Order.create({
-                        orderItems,
-                        shippingAddress: {
-                            fullName,
-                            address,
-                            city, phone
-                        },
-                        paymentMethod,
-                        deliveredMethod,
-                        itemsPrice,
-                        shippingPrice,
-                        totalPrice,
-                        user: user,
-                        isPaid,
-                        paidAt
-                    })
-                    if (createdOrder) {
-                        return {
-                            status: 'OK',
-                            message: 'SUCCESS'
-                        }
+
+                    return {
+                        status: 'OK',
+                        message: 'SUCCESS'
                     }
+
                 } else {
                     return {
                         status: 'OK',
@@ -54,15 +38,35 @@ const createOrderService = (newOrder) => {
             const results = await Promise.all(promises)
             const newData = results && results.filter((item) => item.id)
             if (newData.length) {
+
                 resolve({
                     status: 'ERR',
                     message: `San pham voi id ${newData.map((item) => item.id).join(', ')} khong du hang`
                 })
+            } else {
+                const createdOrder = await Order.create({
+                    orderItems,
+                    shippingAddress: {
+                        fullName,
+                        address,
+                        city, phone
+                    },
+                    paymentMethod,
+                    deliveredMethod,
+                    itemsPrice,
+                    shippingPrice,
+                    totalPrice,
+                    user: user,
+                    isPaid,
+                    paidAt
+                })
+                if (createdOrder) {
+                    resolve({
+                        status: 'OK',
+                        message: 'Order success'
+                    })
+                }
             }
-            resolve({
-                status: 'OK',
-                message: 'Order success'
-            })
         } catch (err) {
             reject(err)
         }
@@ -98,7 +102,7 @@ const getAllOrderDetailsService = (id) => {
         try {
             const order = await Order.find({
                 user: id
-            })
+            }).sort({ createdAt: -1, updatedAt: -1 })
             if (order === null) {
                 resolve({
                     status: 'ERR',

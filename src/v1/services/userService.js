@@ -133,7 +133,7 @@ const getAllUsersService = (id) => {
     return new Promise(async (resolve, reject) => {
         try {
 
-            const allUsers = await User.find()
+            const allUsers = await User.find().sort({ createdAt: -1, updatedAt: -1 })
             // console.log('updateUser', updateUser)
             resolve({
                 status: 'OK',

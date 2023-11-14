@@ -24,7 +24,7 @@ const createProductService = (newProduct) => {
                 description,
                 discount,
                 selled,
-                
+
             })
             if (createProduct) {
                 resolve({
@@ -128,7 +128,7 @@ const getAllProductsService = (limit, page, sort, filter) => {
 
                 const allProductsFilter = await Product.find({
                     [labelFilter]: { '$regex': filter[1] }
-                }).limit(limit).skip(limit * page)
+                }).limit(limit).skip(limit * page).sort({ rating: -1 })
 
                 resolve({
                     status: 'OK',
@@ -143,7 +143,7 @@ const getAllProductsService = (limit, page, sort, filter) => {
                 const objectSort = {}
                 objectSort[sort[1]] = sort[0]
                 const allProductsSort = await
-                    Product.find().limit(limit).skip(limit * page).sort(objectSort)
+                    Product.find().limit(limit).skip(limit * page).sort(objectSort).sort({ rating: -1 })
                 resolve({
                     status: 'OK',
                     message: 'All Products Sort',
@@ -155,9 +155,11 @@ const getAllProductsService = (limit, page, sort, filter) => {
             }
             //const allProducts = await Product.find().limit(limit).skip(limit * page).sort(Product.rating)
             if (!limit) {
-                allProducts = await Product.find()
+                allProducts = await
+                    Product.find().sort({ rating: -1 })
             } else {
-                allProducts = await Product.find().limit(limit).skip(page * limit)
+                allProducts = await
+                    Product.find().limit(limit).skip(page * limit).sort({ rating: -1 })
             }
             resolve({
                 status: 'OK',
