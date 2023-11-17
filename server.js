@@ -23,12 +23,16 @@ app.use(express.urlencoded({ limit: '50mb' }))
 
 
 mongoose.connect(process.env.MONGO_URI, { serverSelectionTimeoutMS: 3000 })
-    .then(() => console.log('Connected!'))
-    .catch(err => console.log('Error connecting', err))
+    .then(() => {
+        // console.log('Connected!')
+    })
+    .catch(err => {
+        // console.log('Error connecting', err)
+    })
 
 
-app.listen(PORT,
-    console.log(
-        `Server running in ${process.env.NODE_ENV} mode on port ${PORT}`
-    )
+app.listen(PORT
+    // console.log(
+    //     `Server running in ${process.env.NODE_ENV} mode on port ${PORT}`
+    // )
 )
