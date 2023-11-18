@@ -4,7 +4,7 @@ import {
     deleteUser, getAllUsers, getDetailsUser,
     refreshToken, logOutUser, deleteManyUsers
 } from '../controllers/userController.js'
-import { authMiddleware,authUserMiddleware } from '../middlerwares/authMiddlerware.js'
+import { authMiddleware, authUserMiddleware } from '../middlerwares/authMiddlerware.js'
 const router = express.Router()
 router.route('/sign-up').post(createUser)
 router.route('/sign-in').post(loginUser)

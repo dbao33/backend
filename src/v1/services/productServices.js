@@ -141,7 +141,9 @@ const getAllProductsService = (limit, page, sort, filter) => {
             }
             if (sort) {
                 const objectSort = {}
-                objectSort[sort[1]] = sort[0]
+
+                objectSort[sort[0]] = Number(sort[1])
+                console.log(objectSort)
                 const allProductsSort = await
                     Product.find().limit(limit).skip(limit * page).sort(objectSort).sort({ rating: -1 })
                 resolve({
