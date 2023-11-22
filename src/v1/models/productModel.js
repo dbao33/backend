@@ -8,6 +8,10 @@ const productSchema = new mongoose.Schema(
         price: { type: Number, required: true },
         countInStock: { type: Number, required: true },
         rating: { type: Number, required: true },
+        hardDrive: { type: Number, required: true },
+        cpu: { type: Number, required: true },
+        ram: { type: Number, required: true },
+        monitor: { type: Number, required: true },
         description: { type: String },
         discount: { type: Number },
         selled: { type: Number }

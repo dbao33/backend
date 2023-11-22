@@ -3,7 +3,8 @@ import Product from '../models/productModel.js'
 const createProductService = (newProduct) => {
     return new Promise(async (resolve, reject) => {
         const { name, image, type, price,
-            countInStock, rating, description, discount, selled } = newProduct
+            countInStock, rating, description, discount, selled,
+            hardDrive, cpu, ram, monitor } = newProduct
         try {
             const checkProduct = await Product.findOne({
                 name: name
@@ -24,6 +25,10 @@ const createProductService = (newProduct) => {
                 description,
                 discount,
                 selled,
+                hardDrive,
+                cpu,
+                ram,
+                monitor,
 
             })
             if (createProduct) {

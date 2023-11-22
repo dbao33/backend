@@ -8,7 +8,8 @@ import {
 const createProduct = async (req, res) => {
     try {
         const { name, image, type, price,
-            countInStock, rating, description, discount, selled } = req.body
+            countInStock, rating, description, discount, selled,
+            hardDrive, cpu, ram, monitor } = req.body
         // console.log('req.body', req.body)
         if (!name || !type || !price || !countInStock || !rating) {
             return res.status(200).json({
