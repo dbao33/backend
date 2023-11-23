@@ -1,7 +1,7 @@
 import {
     createProductService, updateProductService, getDetailsProductService,
     deleteProductService, getAllProductsService, deleteManyProductsService,
-    getAllTypesService
+    getAllTypesService, getSearchProductsService
 } from '../services/productServices.js'
 
 
@@ -130,6 +130,19 @@ const getAllTypes = async (req, res) => {
     }
 }
 
+const getSearchProducts = async (req, res) => {
+
+    try {
+        const keyword = req.query.keyword
+
+        const respone = await getSearchProductsService(keyword)
+        return res.status(200).json(respone)
+    } catch (err) {
+        return res.status(404).json({
+            message: err.message
+        })
+    }
+};
 export {
     createProduct,
     updateProduct,
@@ -138,6 +151,7 @@ export {
     getAllProducts,
     deleteManyProducts,
     getAllTypes,
+    getSearchProducts,
 
 
 }

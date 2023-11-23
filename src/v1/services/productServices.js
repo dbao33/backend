@@ -216,6 +216,25 @@ const getAllTypesService = () => {
     })
 }
 
+
+const getSearchProductsService = (keyword) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            const regex = new RegExp(keyword, 'i')
+            const products = await Product.find({
+                name: { $regex: regex },
+            })
+            resolve({
+                status: 'OK',
+                message: 'All Types ',
+                data: products,
+            })
+
+        } catch (err) {
+            reject(err)
+        }
+    })
+}
 export {
     createProductService,
     updateProductService,
@@ -224,5 +243,6 @@ export {
     getAllProductsService,
     deleteManyProductsService,
     getAllTypesService,
+    getSearchProductsService,
 
 }
