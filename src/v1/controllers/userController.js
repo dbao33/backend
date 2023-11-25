@@ -116,7 +116,8 @@ const deleteUser = async (req, res) => {
 
 const getAllUsers = async (req, res) => {
     try {
-        const response = await getAllUsersService()
+        const { filter } = req.query
+        const response = await getAllUsersService(filter)
         return res.status(200).json(response)
     } catch (err) {
         return res.status(404).json({

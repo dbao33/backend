@@ -129,12 +129,30 @@ const deleteUserService = (id) => {
     })
 }
 
-const getAllUsersService = (id) => {
+const getAllUsersService = (filter) => {
     return new Promise(async (resolve, reject) => {
         try {
+            let allUsers = []
 
-            const allUsers = await User.find().sort({ createdAt: -1, updatedAt: -1 })
             // console.log('updateUser', updateUser)
+            if (filter) {
+                // console.log('filter', filter)
+                const labelFilter = filter[0]
+                console.log('filter ', filter)
+
+                console.log('first user', labelFilter)
+                console.log('filter[1] ', filter[1])
+                const allUsersFilter = await User.find({
+                    [labelFilter]: filter[1]
+                }).sort({ createdAt: -1, updatedAt: -1 })
+                resolve({
+                    status: 'OK',
+                    message: 'All Users Filter',
+                    data: allUsersFilter,
+                })
+            } else {
+                allUsers = await User.find().sort({ createdAt: -1, updatedAt: -1 })
+            }
             resolve({
                 status: 'OK',
                 message: 'All user ',
