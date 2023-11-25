@@ -62,7 +62,7 @@ const loginUser = async (req, res) => {
             path: '/',
         })
         // console.log('response', response)
-        return res.status(200).json(newReponse)
+        return res.status(200).json({ ...newReponse, refresh_token })
     } catch (err) {
         return res.status(404).json({
             message: err.message
@@ -148,7 +148,7 @@ const getDetailsUser = async (req, res) => {
 
 const refreshToken = async (req, res) => {
     try {
-        const token = req.cookies.refresh_token
+        const token = req.headers.token.split(' ')[1]
         if (!token) {
             return res.status(200).json({
                 status: 'ERR',

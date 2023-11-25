@@ -138,10 +138,6 @@ const getAllUsersService = (filter) => {
             if (filter) {
                 // console.log('filter', filter)
                 const labelFilter = filter[0]
-                console.log('filter ', filter)
-
-                console.log('first user', labelFilter)
-                console.log('filter[1] ', filter[1])
                 const allUsersFilter = await User.find({
                     [labelFilter]: filter[1]
                 }).sort({ createdAt: -1, updatedAt: -1 })
