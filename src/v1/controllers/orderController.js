@@ -26,14 +26,14 @@ const createOrder = async (req, res) => {
 
 const getOrderDetails = async (req, res) => {
     try {
-        const userId = req.params.id
-        if (!userId) {
+        const orderId = req.params.id
+        if (!orderId) {
             return res.status(200).json({
                 status: 'ERR',
-                message: 'The userId is required'
+                message: 'The orderId is required'
             })
         }
-        const response = await getOrderDetailsService(userId)
+        const response = await getOrderDetailsService(orderId)
         return res.status(200).json(response)
     } catch (err) {
         return res.status(404).json({

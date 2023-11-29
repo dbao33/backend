@@ -137,6 +137,7 @@ const getAllUsersService = (filter) => {
             // console.log('updateUser', updateUser)
             if (filter) {
                 // console.log('filter', filter)
+                // filter = ['isAdmin', 'false']
                 const labelFilter = filter[0]
                 const allUsersFilter = await User.find({
                     [labelFilter]: filter[1]
